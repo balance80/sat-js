@@ -573,6 +573,7 @@
     this['aInB'] = true;
     this['bInA'] = true;
     this['overlap'] = Number.MAX_VALUE;
+    this['overlapMaxX'] = Number.MIN_VALUE;
     return this;
   };
 
@@ -668,6 +669,7 @@
     // This is not a separating axis. If we're calculating a response, calculate the overlap.
     if (response) {
       var overlap = 0;
+      var overlapMaxX = 0;
       // A starts further left than B
       if (rangeA[0] < rangeB[0]) {
         response['aInB'] = false;
@@ -703,6 +705,10 @@
         if (overlap < 0) {
           response['overlapN'].reverse();
         }
+      }
+
+      if (absOverlap > response['overlapMaxX']) {
+        response['overlapMaxX'] = absOverlap;
       }
     }
     T_VECTORS.push(offsetV);
